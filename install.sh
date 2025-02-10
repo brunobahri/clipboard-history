@@ -22,7 +22,12 @@ echo "[OK] Servicos anteriores parados"
 
 echo "Compilando hotkey binary..."
 swiftc -O -o "$HISTORY_DIR/clipboard-hotkey" "$HISTORY_DIR/ClipboardHistoryHotkey.swift" -framework Cocoa -framework Carbon
-echo "[OK] Hotkey compilado ($HISTORY_DIR/clipboard-hotkey)"
+codesign --force --sign - "$HISTORY_DIR/clipboard-hotkey" 2>/dev/null
+echo "[OK] Hotkey compilado e assinado"
+
+osacompile -o /tmp/ClipboardPicker.app "$HISTORY_DIR/picker.applescript"
+codesign --force --sign - /tmp/ClipboardPicker.app 2>/dev/null
+echo "[OK] Picker compilado e assinado"
 
 mkdir -p "$HOME/Library/LaunchAgents"
 

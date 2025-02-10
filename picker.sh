@@ -61,6 +61,7 @@ save_items() {
 compile_picker_app() {
     [ -d "$PICKER_APP" ] && return
     osacompile -o "$PICKER_APP" "$HISTORY_DIR/picker.applescript"
+    codesign --force --sign - "$PICKER_APP" 2>/dev/null
 }
 
 show_picker() {
